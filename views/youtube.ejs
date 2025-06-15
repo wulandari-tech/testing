@@ -1,0 +1,47 @@
+<%- include('partials/head', { pageTitle: pageTitle }) %>
+<%- include('partials/navbar', { navTitle: navTitle }) %>
+
+<div class="main-container input-page">
+    <div class="hero-section">
+        <div class="hero-content">
+            <i class="fab fa-youtube hero-icon-tiktok" style="color: #FF0000; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);"></i>
+            <h1><%= navTitle %> Downloader</h1>
+            <p class="hero-tagline"><%= tagline %></p>
+            
+            <form action="/download/youtube" method="POST" class="input-form modern-input-form">
+                <div class="form-group">
+                    <i class="fas fa-link icon-input" style="color: #FF0000;"></i>
+                    <input type="text" name="url" id="ytUrl" placeholder="Tempelkan link YouTube di sini..." required value="<%= locals.lastUrl || '' %>">
+                </div>
+                <div class="form-group" style="margin-top: 15px;">
+                     <i class="fas fa-sliders-h icon-input" style="color: #FF0000;"></i>
+                    <select name="quality" style="flex-grow: 1; padding: 18px 20px 18px 60px; font-size: 1em; background-color: var(--input-bg); color: var(--text-color); border: 2px solid var(--border-color); border-radius: var(--border-radius-md); outline:none; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23AAAAAA%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 12px auto;">
+                        <option value="360">360p</option>
+                        <option value="480">480p</option>
+                        <option value="720" selected>720p (HD)</option>
+                        <option value="1080">1080p (Full HD)</option>
+                    </select>
+                </div>
+                 <button type="submit" class="btn btn-primary btn-glow" style="margin-top:20px; width:100%; background-color: #FF0000; border-color: #FF0000;">
+                    <i class="fas fa-download"></i> Unduh Video
+                </button>
+            </form>
+            <div class="loader-container" id="ytLoaderContainer" style="display:none;">
+                <div class="loader" style="border-top-color: #FF0000;"></div>
+                <span>Memproses video YouTube... Mohon tunggu.</span>
+            </div>
+             <% if (locals.error) { %>
+                <div class="result-card error-card bounce-in" style="margin-top: 20px; padding: 15px;">
+                    <p style="margin-bottom:0;"><%= error %></p>
+                </div>
+            <% } %>
+             <p class="input-hint">Pilih kualitas dan unduh video favoritmu.</p>
+        </div>
+        <div class="hero-decoration">
+            <div class="shape shape-1" style="background: #FF0000;"></div>
+            <div class="shape shape-2" style="background: #CD201F;"></div>
+            <div class="shape shape-3" style="background: #B31217;"></div>
+        </div>
+    </div>
+</div>
+<%- include('partials/footer') %>

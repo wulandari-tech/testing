@@ -1,0 +1,76 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const navToggler = document.querySelector('.nav-toggler');
+    const navMenu = document.querySelector('.nav-menu');
+
+    if (navToggler && navMenu) {
+        navToggler.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const isExpanded = navMenu.classList.contains('active');
+            navToggler.setAttribute('aria-expanded', isExpanded);
+            navToggler.classList.toggle('open', isExpanded);
+        });
+    }
+
+    const forms = document.querySelectorAll('.input-form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+            let loaderContainerId;
+            let loaderContainer;
+            
+            if (this.closest('.tiktok-page')) {
+                loaderContainerId = 'tiktokLoaderContainer';
+            } else if (this.closest('.tiktok-slide-page')) {
+                loaderContainerId = 'tiktokSlideLoaderContainer';
+            } else if (this.closest('.spotify-page')) {
+                 loaderContainerId = 'spotifyLoaderContainer';
+            }
+            
+            if (loaderContainerId) {
+                loaderContainer = document.getElementById(loaderContainerId);
+            }
+            
+            const submitButton = this.querySelector('button[type="submit"], .btn-submit-icon');
+            
+            if (loaderContainer) {
+                loaderContainer.style.display = 'flex';
+            }
+
+            if (submitButton) {
+                submitButton.disabled = true;
+                const originalContent = submitButton.innerHTML;
+                if (submitButton.classList.contains('btn-submit-icon') || submitButton.classList.contains('btn-sm')) {
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                } else {
+                     submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MEMPROSES...';
+                }
+                
+                window.addEventListener('pageshow', function(event) {
+                    if (event.persisted) {
+                        if (loaderContainer) loaderContainer.style.display = 'none';
+                        if (submitButton) {
+                            submitButton.disabled = false;
+                            submitButton.innerHTML = originalContent;
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    const spotifySearchItemForms = document.querySelectorAll('.search-item-form');
+    spotifySearchItemForms.forEach(form => {
+        form.addEventListener('submit', function() {
+            const spotifyLoader = document.getElementById('spotifyLoaderContainer');
+            if (spotifyLoader) {
+                spotifyLoader.style.display = 'flex';
+                const loaderText = spotifyLoader.querySelector('span');
+                if(loaderText) loaderText.textContent = 'Memuat info lagu...';
+            }
+            const button = this.querySelector('button[type="submit"]');
+            if(button){
+                button.disabled = true;
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            }
+        });
+    });
+});

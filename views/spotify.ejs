@@ -1,0 +1,102 @@
+<%- include('partials/head', { pageTitle: pageTitle }) %>
+<%- include('partials/navbar', { navTitle: navTitle }) %>
+
+<div class="main-container input-page spotify-page">
+    <div class="hero-section spotify-hero">
+        <div class="hero-content">
+            <i class="fab fa-spotify hero-icon-spotify"></i>
+            <h1>Spotify Downloader</h1>
+            <p class="hero-tagline"><%= tagline %></p>
+            
+            <form action="/download/spotify" method="POST" class="input-form modern-input-form spotify-form">
+                <div class="form-group">
+                    <i class="fas fa-search icon-input"></i>
+                    <input type="text" name="query" id="spotifyQuery" placeholder="Tempelkan link lagu atau cari judul..." required
+                           value="<%= locals.lastQuery || (locals.spotifyTrackInfo ? spotifyTrackInfo.url : '') %>">
+                    <button type="submit" class="btn-submit-icon">
+                        <i class="fas fa-music"></i>
+                    </button>
+                </div>
+            </form>
+            <div class="loader-container" id="spotifyLoaderContainer" style="display:none;">
+                <div class="loader"></div>
+                 <span>Mencari di Spotify...</span>
+            </div>
+        </div>
+    </div>
+
+    <% if (locals.spotifyError) { %>
+        <div class="result-card error-card bounce-in spotify-feedback">
+            <div class="error-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h2>Gagal Memproses!</h2>
+            <p><%= spotifyError %></p>
+        </div>
+    <% } %>
+
+    <% if (locals.spotifyTrackInfo) { %>
+        <div class="result-card content-card fade-in-up spotify-track-result">
+            <div class="content-header">
+                <% if (spotifyTrackInfo.thumbnail) { %>
+                    <img src="<%= spotifyTrackInfo.thumbnail %>" alt="Album Art" class="author-avatar spotify-album-art">
+                <% } %>
+                <div class="author-details">
+                    <h2><%= spotifyTrackInfo.title %></h2>
+                    <p class="author-name spotify-artist">
+                        <i class="fas fa-microphone-alt"></i> <%= spotifyTrackInfo.artist %>
+                    </p>
+                </div>
+            </div>
+            <% if (spotifyTrackInfo.streamUrl) { %>
+            <div class="spotify-player-wrapper">
+                <audio controls controlsList="nodownload" src="<%= spotifyTrackInfo.streamUrl %>">
+                    Browser Anda tidak mendukung elemen audio.
+                </audio>
+            </div>
+            <div class="download-actions">
+                 <a href="<%= spotifyTrackInfo.streamUrl %>" download="<%= spotifyTrackInfo.title.replace(/[^a-zA-Z0-9_]+/g, '_') %> - <%= spotifyTrackInfo.artist.replace(/[^a-zA-Z0-9_]+/g, '_') %>.mp3" class="btn btn-primary btn-glow btn-download-main btn-spotify" target="_blank">
+                    <i class="fas fa-download"></i> Unduh Lagu Ini
+                </a>
+            </div>
+            <% } else { %>
+                <p class="media-type-indicator"><i class="fas fa-exclamation-circle"></i> URL Stream tidak tersedia.</p>
+            <% } %>
+             <div class="extra-info">
+                <% if (spotifyTrackInfo.album) { %><p><i class="fas fa-compact-disc"></i> <strong>Album:</strong> <%= spotifyTrackInfo.album %></p><% } %>
+                <% if (spotifyTrackInfo.duration) { %><p><i class="fas fa-clock"></i> <strong>Durasi:</strong> <%= spotifyTrackInfo.duration %></p><% } %>
+                <% if (spotifyTrackInfo.url) { %><p><a href="<%= spotifyTrackInfo.url %>" target="_blank" rel="noopener noreferrer" class="spotify-external-link"><i class="fab fa-spotify"></i> Buka di Spotify</a></p><% } %>
+            </div>
+        </div>
+    <% } %>
+
+    <% if (locals.spotifySearchResults && spotifySearchResults.length > 0) { %>
+        <div class="spotify-search-results-container fade-in-up">
+            <h2><i class="fas fa-list-ul"></i> Hasil Pencarian Spotify:</h2>
+            <ul class="spotify-search-list">
+                <% spotifySearchResults.forEach(track => { %>
+                    <li class="spotify-search-item">
+                        <% if (track.thumbnail) { %>
+                        <img src="<%= track.thumbnail %>" alt="Thumb" class="search-item-thumb">
+                        <% } %>
+                        <div class="search-item-info">
+                            <p class="search-item-title"><%= track.title %></p>
+                            <p class="search-item-artist"><%= track.artist %></p>
+                        </div>
+                        <form action="/download/spotify" method="POST" class="search-item-form">
+                            <input type="hidden" name="query" value="<%= track.url %>">
+                            <button type="submit" class="btn btn-accent btn-sm">
+                                <i class="fas fa-play-circle"></i> Pilih
+                            </button>
+                        </form>
+                    </li>
+                <% }); %>
+            </ul>
+        </div>
+    <% } else if (locals.spotifySearchResults && spotifySearchResults.length === 0 && !locals.spotifyError && !locals.spotifyTrackInfo && locals.lastQuery) { %>
+        <div class="result-card info-card bounce-in spotify-feedback">
+            <div class="info-icon"><i class="fas fa-search-minus"></i></div>
+            <h2>Tidak Ada Hasil</h2>
+            <p>Tidak ada lagu yang cocok dengan pencarian "<%= locals.lastQuery %>".</p>
+        </div>
+    <% } %>
+</div>
+<%- include('partials/footer') %>

@@ -1,0 +1,25 @@
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="nav-logo">
+            <i class="fas fa-bolt-lightning"></i> MALIK DOWN
+        </a>
+        <button class="nav-toggler" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="nav-toggler-icon"></span>
+            <span class="nav-toggler-icon"></span>
+            <span class="nav-toggler-icon"></span>
+        </button>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="/" class="nav-link <% if (navTitle === 'TikTok') { %>active<% } %>"><i class="fab fa-tiktok"></i> TikTok</a></li>
+            <li class="nav-item"><a href="/tiktok-slide" class="nav-link <% if (navTitle === 'TikTok Slide') { %>active<% } %>"><i class="fas fa-images"></i> TikTok Slide</a></li>
+            <li class="nav-item"><a href="/instagram" class="nav-link <% if (navTitle === 'Instagram') { %>active<% } %>"><i class="fab fa-instagram"></i> IG/FB</a></li>
+            <li class="nav-item"><a href="/youtube" class="nav-link <% if (navTitle === 'YouTube') { %>active<% } %>"><i class="fab fa-youtube"></i> YouTube</a></li>
+            <li class="nav-item"><a href="/spotify" class="nav-link <% if (navTitle === 'Spotify') { %>active<% } %>"><i class="fab fa-spotify"></i> Spotify</a></li>
+            <% if (navTitle === 'Hasil') { %>
+                <li class="nav-item"><a href="#" class="nav-link active"><i class="fas fa-check-circle"></i> Hasil</a></li>
+            <% } %>
+             <% if (navTitle === 'Error') { %>
+                <li class="nav-item"><a href="#" class="nav-link active"><i class="fas fa-exclamation-triangle"></i> Error</a></li>
+            <% } %>
+        </ul>
+    </div>
+</nav>
