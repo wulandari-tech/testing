@@ -1,25 +1,28 @@
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="/" class="nav-logo">
-            <i class="fas fa-bolt-lightning"></i> MALIK DOWN
-        </a>
-        <button class="nav-toggler" aria-label="Toggle navigation" aria-expanded="false">
-            <span class="nav-toggler-icon"></span>
-            <span class="nav-toggler-icon"></span>
-            <span class="nav-toggler-icon"></span>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark-accent fixed-top shadow-lg">
+    <div class="container">
+        <a class="navbar-brand stylish-brand" href="/">
+        MALIK DOWN</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <ul class="nav-menu">
-            <li class="nav-item"><a href="/" class="nav-link <% if (navTitle === 'TikTok') { %>active<% } %>"><i class="fab fa-tiktok"></i> TikTok</a></li>
-            <li class="nav-item"><a href="/tiktok-slide" class="nav-link <% if (navTitle === 'TikTok Slide') { %>active<% } %>"><i class="fas fa-images"></i> TikTok Slide</a></li>
-            <li class="nav-item"><a href="/instagram" class="nav-link <% if (navTitle === 'Instagram') { %>active<% } %>"><i class="fab fa-instagram"></i> IG/FB</a></li>
-            <li class="nav-item"><a href="/youtube" class="nav-link <% if (navTitle === 'YouTube') { %>active<% } %>"><i class="fab fa-youtube"></i> YouTube</a></li>
-            <li class="nav-item"><a href="/spotify" class="nav-link <% if (navTitle === 'Spotify') { %>active<% } %>"><i class="fab fa-spotify"></i> Spotify</a></li>
-            <% if (navTitle === 'Hasil') { %>
-                <li class="nav-item"><a href="#" class="nav-link active"><i class="fas fa-check-circle"></i> Hasil</a></li>
-            <% } %>
-             <% if (navTitle === 'Error') { %>
-                <li class="nav-item"><a href="#" class="nav-link active"><i class="fas fa-exclamation-triangle"></i> Error</a></li>
-            <% } %>
-        </ul>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link <%= currentPath === '/' ? 'active' : '' %>" href="/"><i class="fab fa-tiktok"></i> TikTok</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= currentPath === '/tiktok-slide' ? 'active' : '' %>" href="/tiktok-slide"><i class="far fa-images"></i> TikTok Slide</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= currentPath === '/spotify' ? 'active' : '' %>" href="/spotify"><i class="fab fa-spotify"></i> Spotify</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= currentPath === '/instagram' ? 'active' : '' %>" href="/instagram"><i class="fab fa-instagram"></i> IG/FB</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= currentPath === '/youtube' ? 'active' : '' %>" href="/youtube"><i class="fab fa-youtube"></i> YouTube</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>

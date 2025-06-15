@@ -1,38 +1,22 @@
-<%- include('partials/head', { pageTitle: pageTitle }) %>
-<%- include('partials/navbar', { navTitle: navTitle }) %>
+<%- include('partials/header') %>
 
-<div class="main-container input-page">
-    <div class="hero-section">
-        <div class="hero-content">
-            <i class="fab fa-instagram hero-icon-tiktok" style="color: #E4405F; text-shadow: -1px -1px 0 #FCAF45, 1px 1px 0 #F77737, -2px -2px 0 #FD1D1D, 2px 2px 0 #405DE6;"></i>
-            <h1><%= navTitle %> Downloader</h1>
-            <p class="hero-tagline"><%= tagline %></p>
-            
-            <form action="/download/instagram" method="POST" class="input-form modern-input-form">
-                <div class="form-group">
-                    <i class="fas fa-link icon-input"></i>
-                    <input type="text" name="url" id="igUrl" placeholder="Tempelkan link Instagram/Facebook di sini..." required value="<%= locals.lastUrl || '' %>">
-                    <button type="submit" class="btn-submit-icon">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </form>
-            <div class="loader-container" id="igLoaderContainer" style="display:none;">
-                <div class="loader"></div>
-                <span>Memproses link...</span>
+<div class="text-center hero-section">
+    <h1 class="display-4 fw-bold animated-title"><%= navTitle %></h1>
+    <p class="lead animated-tagline"><%= tagline %></p>
+</div>
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8 col-lg-6">
+        <form action="/download/social" method="POST" class="downloader-form">
+            <div class="input-group input-group-lg mb-3 shadow-sm">
+                <span class="input-group-text bg-insta-gradient text-white border-0"><i class="fas fa-link"></i></span>
+                <input type="url" name="url" class="form-control form-control-lg input-glow" placeholder="Tempel URL Instagram atau Facebook..." value="<%= typeof lastUrl !== 'undefined' ? lastUrl : '' %>" required>
             </div>
-             <% if (locals.error) { %>
-                <div class="result-card error-card bounce-in" style="margin-top: 20px; padding: 15px;">
-                    <p style="margin-bottom:0;"><%= error %></p>
-                </div>
-            <% } %>
-             <p class="input-hint">Unduh video, foto, atau reels dari Instagram & Facebook.</p>
-        </div>
-         <div class="hero-decoration">
-            <div class="shape shape-1" style="background: #E4405F;"></div>
-            <div class="shape shape-2" style="background: #FCAF45;"></div>
-            <div class="shape shape-3" style="background: #405DE6;"></div>
-        </div>
+            <button type="submit" class="btn btn-lg btn-insta-gradient w-100 fw-bold"><i class="fas fa-camera-retro"></i> Unduh Media</button>
+        </form>
+         <% if (typeof error !== 'undefined' && error) { %>
+            <div class="alert alert-danger mt-3 shake"><i class="fas fa-exclamation-triangle"></i> <%= error %></div>
+        <% } %>
     </div>
 </div>
 
